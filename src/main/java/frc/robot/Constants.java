@@ -17,7 +17,9 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
  */
 public final class Constants {
     private Constants() { }
-    // Compressor
+  //
+    public static final int PIGEON_PORT = 1; //TODO:  find proper value 
+  // Compressor
     public static final PneumaticsModuleType PNEUMATICS_MODULE_TYPE = PneumaticsModuleType.CTREPCM;
     public static final boolean COMPRESSOR_CLOSED_LOOP_CONTROL_ENABLED = true;
     // Drivetrain
@@ -25,6 +27,11 @@ public final class Constants {
     public static final int DRIVETRAIN_LEFT_ID2 = 1;
     public static final int DRIVETRAIN_RIGHT_ID1 = 2;
     public static final int DRIVETRAIN_RIGHT_ID2 = 3;
+
+    //PID for Gyro
+    public static final double AutoK_P = .015;
+    public static final double AutoK_I = 0.04;
+    public static final double AutoK_D = 0.004;
     
 
     // Extreme

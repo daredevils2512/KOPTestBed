@@ -4,13 +4,20 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
+
+import edu.wpi.first.cscore.UsbCamera;
+
 import frc.robot.Constants;
-import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.AutoCommands.AutoCommands;
+import frc.robot.commands.AutoCommands.TurnToAngle;
 import frc.robot.subsystems.CompressorSub;
 import frc.robot.subsystems.DriveSub;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.PigeonSub;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -23,10 +30,15 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
+  private final PigeonSub m_PigeonSub = new PigeonSub();
   private final DriveSub m_driveSub = new DriveSub();
   private final CompressorSub m_CompressorSub = new CompressorSub();
 
+  private final Command m_turn90Left;
+  private final Command m_turn90Right;
+  private final Command m_turn180;
+
+  private final Command m_fullAuto;
   
 
   private final CommandXboxController m_driverController =
@@ -39,8 +51,15 @@ public class RobotContainer {
   public RobotContainer() {
    m_CompressorSub.setClosedLoopControl(Constants.COMPRESSOR_CLOSED_LOOP_CONTROL_ENABLED);
    //m_CompressorSub.enableDigital();
+   m_turn90Left = new TurnToAngle(m_driveSub, m_PigeonSub, 90);
+   m_turn90Right = new TurnToAngle(m_driveSub, m_PigeonSub, -90);
+   m_turn180 = new TurnToAngle(m_driveSub, m_PigeonSub, 180);
+   m_fullAuto = AutoCommands.fullAuto(m_driveSub, 1, m_PigeonSub, 90);
     // Configure the trigger bindings
     configureBindings();
+    //start camera server
+    UsbCamera camera = CameraServer.startAutomaticCapture();
+    camera.setResolution(640,480);
   }
 
   /**
@@ -53,9 +72,10 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-  
-    //m_driveSub.setDefaultCommand(m_driveSub.run(() -> m_driveSub.arcadeDrive(0, 0)));
     m_driveSub.setDefaultCommand(m_driveSub.run(() -> m_driveSub.arcadeDrive(m_driverController.getLeftY(), m_driverController.getRightX())));
+    m_driverController.x().whileTrue(m_turn90Left);
+    m_driverController.b().whileTrue(m_turn90Right);
+    m_driverController.y().whileTrue(m_turn180);
     
   }
 
@@ -66,6 +86,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return m_fullAuto;
   }
 }
