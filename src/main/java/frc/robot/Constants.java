@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -32,6 +33,12 @@ public final class Constants {
     public static final double AutoK_P = .015;
     public static final double AutoK_I = 0.04;
     public static final double AutoK_D = 0.004;
+
+
+    public static final int FORWARD_CHANNEL = 0; // TODO channels might be wrong
+    public static final int REVERSE_CHANNEL = 1; //TODO
+    public static final Value INTAKE_EXTENDED_VALUE = Value.kForward;
+    public static final Value INTAKE_RETRACTED_VALUE = Value.kReverse;
     
 
     // Extreme

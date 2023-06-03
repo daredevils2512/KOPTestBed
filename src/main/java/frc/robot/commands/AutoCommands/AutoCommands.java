@@ -5,7 +5,7 @@ import javax.naming.spi.DirObjectFactory;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.subsystems.DriveSub;
-import frc.robot.subsystems.PigeonSub;
+// import frc.robot.subsystems.PigeonSub;
 
 
 public final class AutoCommands {
@@ -21,11 +21,11 @@ public final class AutoCommands {
    return new AutoDrive(driveSub, speed);
  }
 
- public static Command turnToAngle(DriveSub driveSub, PigeonSub pigeonSub, Integer angleToTurnTO){
-    return new TurnToAngle(driveSub, pigeonSub, angleToTurnTO);
- }
+//  public static Command turnToAngle(DriveSub driveSub, PigeonSub pigeonSub, Integer angleToTurnTO){
+//     return new TurnToAngle(driveSub, pigeonSub, angleToTurnTO);
+//  }
 
- public static Command fullAuto(DriveSub driveSub, double speed, PigeonSub pigeonSub, Integer angleToTurnTO){
-    return (autoDrive(driveSub, speed).withTimeout(.5)).andThen(turnToAngle(driveSub, pigeonSub, angleToTurnTO));
+//  public static Command fullAuto(DriveSub driveSub, double speed, PigeonSub pigeonSub, Integer angleToTurnTO){
+//     return (autoDrive(driveSub, speed).withTimeout(.5)).andThen(turnToAngle(driveSub, pigeonSub, angleToTurnTO));
+//  }
  }
-}
